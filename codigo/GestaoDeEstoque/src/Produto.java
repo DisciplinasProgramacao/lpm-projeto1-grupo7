@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.function.Executable;
+
 public class Produto {
     private String descricao;
     private double precoDeCusto;
@@ -10,7 +12,21 @@ public class Produto {
         valorArrecadado = 0;
     }
 
-    public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
+    // Getters and Setters ======================
+
+    public static double getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public double getPrecoDeVenda() {
+        return precoDeVenda;
+    }
+
+    public int getQuantidadeVendida() {
+        return quantidadeVendida;
+    }
+
+    public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
         try {
             if(validaMargemDeLucro(margemDeLucro)) {
                 this.precoDeVenda = calculaPrecoDeVenda(precoDeCusto, margemDeLucro);
@@ -20,27 +36,27 @@ public class Produto {
         }
     }
 
-    public boolean validaMargemDeLucro(double margemDeLucro) throws Exception {
+    // Métodos ======================
+
+    public boolean validaMargemDeLucro(double margemDeLucro) throws Exception { // Testado
         if(margemDeLucro >= 30 && margemDeLucro <= 80) return true;
         throw new Exception("Margem de Lucro Inválida");
     }
 
-    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
-        double lucro = precoDeCusto * (margemDeLucro / 100);
-        double imposto = precoDeCusto * (18 / 100);
-        return (precoDeCusto + lucro + imposto);
+    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
+        return 1.18 * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
     }
 
-    public void registraQuantidadeVendida(int quantidade) {
+    public void registraQuantidadeVendida(int quantidade) { // Testado
         this.quantidadeVendida += quantidade;
     }
 
-    public void venderProduto(int quantidadeVendida) {
+    public void venderProduto(int quantidadeVendida) { // Testado
         valorArrecadado += (precoDeVenda * quantidadeVendida);
         registraQuantidadeVendida(quantidadeVendida);
     }
 
-    public void comprarProduto(int quantidadeComprada) {
+    public void comprarProduto(int quantidadeComprada) { // Testado
         venderProduto(quantidadeComprada);
     }
 }
