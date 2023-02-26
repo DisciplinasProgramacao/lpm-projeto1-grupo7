@@ -5,16 +5,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ProdutoTest extends TestCase {
-    private static Produto p;
-
-    @BeforeEach
-    public void inicializaProduto() {
-        p = new Produto();
-    }
 
     @Test
     @Description("Checa se um produto é instância da classe Produto")
     public void testaInstanciaDeProduto() {
+        Produto p = new Produto(10, "iphone 13");
         Assertions.assertInstanceOf(Produto.class, p);
     }
 
@@ -24,7 +19,8 @@ class ProdutoTest extends TestCase {
         double precoDeCusto = 20;
         double margemDeLucro = 50;
 
-        double calculoPrecoDeVenda = p.calculaPrecoDeVenda(precoDeCusto, margemDeLucro);
+        Produto p = new Produto(precoDeCusto, "Breve descrição sobre o produto");
+        double calculoPrecoDeVenda = p.calculaPrecoDeVenda(margemDeLucro);
 
         Assertions.assertEquals(35.4, calculoPrecoDeVenda);
     }
@@ -35,7 +31,8 @@ class ProdutoTest extends TestCase {
         double precoDeCusto = 20;
         double margemDeLucro = 50;
 
-        p.setPrecoDeVenda(precoDeCusto, margemDeLucro);
+        Produto p = new Produto(precoDeCusto, "Breve descrição sobre o produto");
+        p.setPrecoDeVenda(margemDeLucro);
 
         Assertions.assertEquals(35.40, p.getPrecoDeVenda());
     }
@@ -46,7 +43,9 @@ class ProdutoTest extends TestCase {
         double precoDeCusto = 20;
         double margemDeLucro = 10;
 
-        p.setPrecoDeVenda(precoDeCusto, margemDeLucro);
+    Produto p = new Produto(precoDeCusto, "Breve descrição sobre o produto");
+
+        p.setPrecoDeVenda(margemDeLucro);
 
         Assertions.assertEquals(0.0, p.getPrecoDeVenda());
     }
@@ -55,6 +54,8 @@ class ProdutoTest extends TestCase {
     @Description("Deve acrescentar x unidades em quantidade vendida")
     public void testaQuantidadeVendida() {
         int unidadesVendidas = 10;
+
+        Produto p = new Produto();
 
         p.registraQuantidadeVendida(unidadesVendidas);
 
@@ -69,7 +70,9 @@ class ProdutoTest extends TestCase {
         double margemDeLucro = 50;
         int quantidadeVendida = 10;
 
-        p.setPrecoDeVenda(precoDeCusto, margemDeLucro);
+        Produto p = new Produto(precoDeCusto, "Breve descrição sobre o produto");
+
+        p.setPrecoDeVenda(margemDeLucro);
         double precoDeVenda = p.getPrecoDeVenda();
         p.venderProduto(quantidadeVendida);
         double valorVendido = precoDeVenda * quantidadeVendida;
@@ -84,7 +87,9 @@ class ProdutoTest extends TestCase {
         double margemDeLucro = 50;
         int quantidadeVendida = 10;
 
-        p.setPrecoDeVenda(precoDeCusto, margemDeLucro);
+        Produto p = new Produto(precoDeCusto, "Breve descrição sobre o produto");
+
+        p.setPrecoDeVenda(margemDeLucro);
         double precoDeVenda = p.getPrecoDeVenda();
         p.comprarProduto(quantidadeVendida);
         double valorArrecadado = precoDeVenda * quantidadeVendida;

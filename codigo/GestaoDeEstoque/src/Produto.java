@@ -7,14 +7,35 @@ public class Produto {
     private static int quantidadeVendida;
     private static double valorArrecadado;
 
-    public Produto() {
+    public Produto(double precoDeCusto, String descricao) {
+        setDescricao(descricao);
+        setPrecoDeCusto(precoDeCusto);
         quantidadeVendida = 0;
         valorArrecadado = 0;
     }
 
+    // Construtor para teste
+    public Produto() {}
+
     // Getters and Setters ======================
 
-    public static double getValorArrecadado() {
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public double getPrecoDeCusto() {
+        return precoDeCusto;
+    }
+
+    public void setPrecoDeCusto(double precoDeCusto) {
+        this.precoDeCusto = precoDeCusto;
+    }
+
+    public double getValorArrecadado() {
         return valorArrecadado;
     }
 
@@ -26,10 +47,10 @@ public class Produto {
         return quantidadeVendida;
     }
 
-    public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
+    public void setPrecoDeVenda(double margemDeLucro) { // Testado
         try {
             if(validaMargemDeLucro(margemDeLucro)) {
-                this.precoDeVenda = calculaPrecoDeVenda(precoDeCusto, margemDeLucro);
+                this.precoDeVenda = calculaPrecoDeVenda(margemDeLucro);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,16 +64,16 @@ public class Produto {
         throw new Exception("Margem de Lucro Inválida");
     }
 
-    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
-        return 1.18 * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
+    public double calculaPrecoDeVenda(double margemDeLucro) { // Testado
+        return 1.18 * ((getPrecoDeCusto() * margemDeLucro / 100) + getPrecoDeCusto());
     }
 
     public void registraQuantidadeVendida(int quantidade) { // Testado
-        this.quantidadeVendida += quantidade;
+        quantidadeVendida += quantidade;
     }
 
     public void venderProduto(int quantidadeVendida) { // Testado
-        valorArrecadado += (precoDeVenda * quantidadeVendida);
+        valorArrecadado += (getPrecoDeVenda() * quantidadeVendida);
         registraQuantidadeVendida(quantidadeVendida);
     }
 
