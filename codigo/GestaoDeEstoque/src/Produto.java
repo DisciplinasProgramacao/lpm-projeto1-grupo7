@@ -5,13 +5,11 @@ public class Produto {
     private double margemDeLucro, valorDoImposto;
     private static double valorArrecadado;
     private static int quantidade;
-    private int quantidadeMinimaNecessaria;
+    private int quantidadeMinima;
 
-    // CLASS CONSTRUCTOR
     public Produto() {
     }
 
-    // GETTERS AND SETTERS
     public int getId() {
         return id;
     }
@@ -84,11 +82,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public int getQuantidadeMinimaNecessaria() {
-        return quantidadeMinimaNecessaria;
+    public int getQuantidadeMinima() {
+        return quantidadeMinima;
     }
 
-    public void setQuantidadeMinimaNecessaria(int quantidadeMinimaNecessaria) {
-        this.quantidadeMinimaNecessaria = quantidadeMinimaNecessaria;
+    public void setQuantidadeMinima(int quantidadeMinima) {
+        this.quantidadeMinima = quantidadeMinima;
     }
 }
