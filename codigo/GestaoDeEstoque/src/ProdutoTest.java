@@ -1,10 +1,9 @@
 import jdk.jfr.Description;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ProdutoTest extends TestCase {
+public class ProdutoTest extends TestCase {
 
     @Test
     @Description("Checa se um produto é instância da classe Produto")
@@ -39,7 +38,7 @@ class ProdutoTest extends TestCase {
 
     @Test
     @Description("Preço de Venda deve permanecer zerado ao tentar inserir uma margem de lucro inválida")
-    public void testaPrecoDeVenda() throws Exception {
+    public void testaPrecoDeVenda() {
         double precoDeCusto = 20;
         double margemDeLucro = 10;
 
