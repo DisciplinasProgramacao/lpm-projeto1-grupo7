@@ -1,95 +1,46 @@
 public class Produto {
-    private static int id = 0;
-    private String nome, descricao;
-    private double precoDeCusto, precoDeVenda;
-    private double margemDeLucro;
-    private double valorArrecadado;
-    private static int quantidade;
-    private int quantidadeMinima;
+    private String descricao;
+    private double precoDeCusto;
+    private double precoDeVenda;
+    private static int quantidadeVendida;
+    private static double valorArrecadado;
 
-    public Produto(int id, String nome, String descricao, double precoDeCusto, int quantidade, int quantidadeMinima) {
-        setId(id);
-        setNome(nome);
-        setDescricao(descricao);
-        setPrecoDeCusto(precoDeCusto);
-        setQuantidade(quantidade);
-        setQuantidadeMinima(quantidadeMinima);
-        setPrecoDeVenda(getPrecoDeCusto(), getMargemDeLucro());
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getPrecoDeCusto() {
-        return precoDeCusto;
-    }
-
-    public void setPrecoDeCusto(double precoDeCusto) {
-        this.precoDeCusto = precoDeCusto;
-    }
-
-    public double getPrecoDeVenda() {
-        return precoDeVenda;
+    public Produto() {
+        quantidadeVendida = 0;
+        valorArrecadado = 0;
     }
 
     public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
-        this.precoDeVenda = 1.18 * ((precoDeCusto * (margemDeLucro / 100)) + precoDeCusto);
-    }
-
-    public double getMargemDeLucro() {
-        return margemDeLucro;
-    }
-
-    public void setMargemDeLucro(double margemDeLucro) {
-        if(!(margemDeLucro >= 30 && margemDeLucro <= 80)) {
-            this.margemDeLucro = 50; // comportamento padrão para que se a margem de lucro inserida for inválida, o código seta automaticamente para 50
-        } else {
-            this.margemDeLucro = margemDeLucro;
+        try {
+            if(validaMargemDeLucro(margemDeLucro)) {
+                this.precoDeVenda = calculaPrecoDeVenda(precoDeCusto, margemDeLucro);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    public double getValorArrecadado() {
-        return valorArrecadado;
+    public boolean validaMargemDeLucro(double margemDeLucro) throws Exception {
+        if(margemDeLucro >= 30 && margemDeLucro <= 80) return true;
+        throw new Exception("Margem de Lucro Inválida");
     }
 
-    public void setValorArrecadado(double valorArrecadado) {
-        this.valorArrecadado = valorArrecadado;
+    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
+        double lucro = precoDeCusto * (margemDeLucro / 100);
+        double imposto = precoDeCusto * (18 / 100);
+        return (precoDeCusto + lucro + imposto);
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public void registraQuantidadeVendida(int quantidade) {
+        this.quantidadeVendida += quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void venderProduto(int quantidadeVendida) {
+        valorArrecadado += (precoDeVenda * quantidadeVendida);
+        registraQuantidadeVendida(quantidadeVendida);
     }
 
-    public int getQuantidadeMinima() {
-        return quantidadeMinima;
-    }
-
-    public void setQuantidadeMinima(int quantidadeMinima) {
-        this.quantidadeMinima = quantidadeMinima;
+    public void comprarProduto(int quantidadeComprada) {
+        venderProduto(quantidadeComprada);
     }
 }
