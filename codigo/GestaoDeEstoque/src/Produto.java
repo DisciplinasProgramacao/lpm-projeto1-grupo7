@@ -1,13 +1,20 @@
 public class Produto {
-    private int id;
+    private static int id = 0;
     private String nome, descricao;
     private double precoDeCusto, precoDeVenda;
-    private double margemDeLucro, valorDoImposto;
-    private static double valorArrecadado;
+    private double margemDeLucro;
+    private double valorArrecadado;
     private static int quantidade;
     private int quantidadeMinima;
 
-    public Produto() {
+    public Produto(int id, String nome, String descricao, double precoDeCusto, int quantidade, int quantidadeMinima) {
+        setId(id);
+        setNome(nome);
+        setDescricao(descricao);
+        setPrecoDeCusto(precoDeCusto);
+        setQuantidade(quantidade);
+        setQuantidadeMinima(quantidadeMinima);
+        setPrecoDeVenda(getPrecoDeCusto(), getMargemDeLucro());
     }
 
     public int getId() {
@@ -46,8 +53,8 @@ public class Produto {
         return precoDeVenda;
     }
 
-    public void setPrecoDeVenda(double precoDeVenda) {
-        this.precoDeVenda = precoDeVenda;
+    public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
+        this.precoDeVenda = 1.18 * ((precoDeCusto * (margemDeLucro / 100)) + precoDeCusto);
     }
 
     public double getMargemDeLucro() {
@@ -55,23 +62,19 @@ public class Produto {
     }
 
     public void setMargemDeLucro(double margemDeLucro) {
-        this.margemDeLucro = margemDeLucro;
+        if(!(margemDeLucro >= 30 && margemDeLucro <= 80)) {
+            this.margemDeLucro = 50; // comportamento padrão para que se a margem de lucro inserida for inválida, o código seta automaticamente para 50
+        } else {
+            this.margemDeLucro = margemDeLucro;
+        }
     }
 
-    public double getValorDoImposto() {
-        return valorDoImposto;
-    }
-
-    public void setValorDoImposto(double valorDoImposto) {
-        this.valorDoImposto = valorDoImposto;
-    }
-
-    public static double getValorArrecadado() {
+    public double getValorArrecadado() {
         return valorArrecadado;
     }
 
-    public static void setValorArrecadado(double valorArrecadado) {
-        Produto.valorArrecadado = valorArrecadado;
+    public void setValorArrecadado(double valorArrecadado) {
+        this.valorArrecadado = valorArrecadado;
     }
 
     public int getQuantidade() {
