@@ -1,83 +1,113 @@
-import org.junit.jupiter.api.function.Executable;
 
 public class Produto {
     private String descricao;
     private double precoDeCusto;
+    private double margemDeLucro;
+    private double impostos = 0.18;
+    private int estoqueAtual;
+    private int estoqueMinimo;
     private double precoDeVenda;
-    private static int quantidadeVendida;
-    private static double valorArrecadado;
+    private int quantidadeVendida;
+    private int quantidadeComprada;
+    private double valorArrecadado;
 
-    public Produto(double precoDeCusto, String descricao) {
-        setDescricao(descricao);
-        setPrecoDeCusto(precoDeCusto);
+    public Produto() {
         quantidadeVendida = 0;
         valorArrecadado = 0;
     }
 
-    // Construtor para teste
-    public Produto() {}
+    public Produto(String descricao, double precoCusto, double margemLucro) {
+        this.descricao = descricao;
+        this.precoDeCusto = precoCusto;
+        this.margemDeLucro = margemLucro;
+    }
 
     // Getters and Setters ======================
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public double getPrecoDeCusto() {
-        return precoDeCusto;
-    }
-
-    public void setPrecoDeCusto(double precoDeCusto) {
-        this.precoDeCusto = precoDeCusto;
-    }
-
     public double getValorArrecadado() {
-        return valorArrecadado;
+        return this.valorArrecadado;
     }
 
     public double getPrecoDeVenda() {
-        return precoDeVenda;
+        return this.precoDeVenda;
     }
 
     public int getQuantidadeVendida() {
-        return quantidadeVendida;
+        return this.quantidadeVendida;
     }
 
-    public void setPrecoDeVenda(double margemDeLucro) { // Testado
+    public int getQuantidadeComprada() {
+        return this.quantidadeComprada;
+    }
+
+    public String getDescricao() {
+        return this.descricao;
+    }
+
+    public void setPrecoDeVenda() { // Testado
         try {
-            if(validaMargemDeLucro(margemDeLucro)) {
-                this.precoDeVenda = calculaPrecoDeVenda(margemDeLucro);
-            }
+            this.precoDeVenda = calculaPrecoDeVenda(this.precoDeCusto, this.margemDeLucro);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
+    public void setPrecoDeCusto(double precoCusto) {
+        try {
+            this.precoDeCusto = precoCusto;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void setMargemDeLucro(double margemLucro) {
+        try {
+            this.margemDeLucro = margemLucro;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    // Método para obter o estoque atual do produto
+    public int getEstoqueAtual() {
+        return estoqueAtual;
+    }
+
+    // Método para obter o estoque mínimo do produto
+    public int getEstoqueMinimo() {
+        return estoqueMinimo;
+    }
+
+
     // Métodos ======================
 
-    public boolean validaMargemDeLucro(double margemDeLucro) throws Exception { // Testado
-        if(margemDeLucro >= 30 && margemDeLucro <= 80) return true;
+    public double registraMargemDeLucro(double margemDeLucro) throws Exception { // Testado
+        if(margemDeLucro >= 30 && margemDeLucro <= 80) {
+            this.margemDeLucro = margemDeLucro;
+        };
         throw new Exception("Margem de Lucro Inválida");
     }
 
-    public double calculaPrecoDeVenda(double margemDeLucro) { // Testado
-        return 1.18 * ((getPrecoDeCusto() * margemDeLucro / 100) + getPrecoDeCusto());
+    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
+        return 1+(impostos) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
     }
 
     public void registraQuantidadeVendida(int quantidade) { // Testado
-        quantidadeVendida += quantidade;
+        this.quantidadeVendida += quantidade;
     }
 
-    public void venderProduto(int quantidadeVendida) { // Testado
-        valorArrecadado += (getPrecoDeVenda() * quantidadeVendida);
+    public void registraVendaProduto(int quantidadeVendida) { // Testado
+        this.estoqueAtual -= quantidadeVendida;
+        this.valorArrecadado += (this.precoDeVenda * quantidadeVendida);
         registraQuantidadeVendida(quantidadeVendida);
     }
 
-    public void comprarProduto(int quantidadeComprada) { // Testado
-        venderProduto(quantidadeComprada);
+    public void registraQuantidadeComprada(int quantidade) { // Testado
+        this.quantidadeComprada += quantidade;
+    }
+
+    public void registraCompraProduto(int quantidadeComprada, double precoCusto) { // Testado
+        this.estoqueAtual += quantidadeComprada;
+        this.precoDeCusto = precoCusto;
+        registraQuantidadeComprada(quantidadeComprada);
     }
 }
