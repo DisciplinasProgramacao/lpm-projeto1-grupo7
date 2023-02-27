@@ -7,6 +7,7 @@ Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 * Bruno Pontes Duarte
 * Diogo Martins de Assis
 * Eduardo Augusto Brito
+* Marcos Paulo Freitas da Silva
 * Samuel Marques Sousa Leal
 
 ## Professores responsáveis
