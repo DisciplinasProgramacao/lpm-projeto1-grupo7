@@ -1,4 +1,3 @@
-
 public class Produto {
     private String descricao;
     private double precoDeCusto;
@@ -16,10 +15,9 @@ public class Produto {
         valorArrecadado = 0;
     }
 
-    public Produto(String descricao, double precoCusto, double margemLucro) {
+    public Produto(String descricao, double precoCusto) throws Exception {
         this.descricao = descricao;
         this.precoDeCusto = precoCusto;
-        this.margemDeLucro = margemLucro;
     }
 
     // Getters and Setters ======================
@@ -60,13 +58,10 @@ public class Produto {
         }
     }
 
-    public void setMargemDeLucro(double margemLucro) {
-        try {
-            this.margemDeLucro = margemLucro;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    public double getMargemDeLucro() {
+        return this.margemDeLucro;
     }
+
     // Método para obter o estoque atual do produto
     public int getEstoqueAtual() {
         return estoqueAtual;
@@ -80,32 +75,33 @@ public class Produto {
 
     // Métodos ======================
 
-    public double registraMargemDeLucro(double margemDeLucro) throws Exception { // Testado
+    public double registraMargemDeLucro(double margemDeLucro) throws Exception {
         if(margemDeLucro >= 30 && margemDeLucro <= 80) {
             this.margemDeLucro = margemDeLucro;
+            return margemDeLucro;
         };
         throw new Exception("Margem de Lucro Inválida");
     }
 
-    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
+    public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
         return 1+(impostos) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
     }
 
-    public void registraQuantidadeVendida(int quantidade) { // Testado
+    public void registraQuantidadeVendida(int quantidade) {
         this.quantidadeVendida += quantidade;
     }
 
-    public void registraVendaProduto(int quantidadeVendida) { // Testado
+    public void registraVendaProduto(int quantidadeVendida) {
         this.estoqueAtual -= quantidadeVendida;
         this.valorArrecadado += (this.precoDeVenda * quantidadeVendida);
         registraQuantidadeVendida(quantidadeVendida);
     }
 
-    public void registraQuantidadeComprada(int quantidade) { // Testado
+    public void registraQuantidadeComprada(int quantidade) {
         this.quantidadeComprada += quantidade;
     }
 
-    public void registraCompraProduto(int quantidadeComprada, double precoCusto) { // Testado
+    public void registraCompraProduto(int quantidadeComprada, double precoCusto) {
         this.estoqueAtual += quantidadeComprada;
         this.precoDeCusto = precoCusto;
         registraQuantidadeComprada(quantidadeComprada);
