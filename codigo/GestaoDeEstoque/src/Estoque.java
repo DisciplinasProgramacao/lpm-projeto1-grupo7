@@ -3,8 +3,6 @@ public class Estoque {
     public int primeiro;
     public int ultimo;
     public int tamanho;
-    public int quantidade;
-    public double valor_vendas;
 
     public Estoque(int tamanho) {
         lista = new Produto[tamanho];
@@ -46,6 +44,27 @@ public class Estoque {
                 lista[ultimo] = novo;
                 ultimo++;
                 tamanho++;
+                System.out.println("Produto adicionado com sucesso");
+            }
+        }
+    }
+
+    /**
+     * Faz a ação de remover um produto da lista presente no estoque
+     * 
+     * @param nome Nome do produto que sera removido do estoque
+     * @throws Exception
+     */
+    public void Remover(String nome) throws Exception {
+        if (!listaVazia()) {
+            for (int i = primeiro; i < ultimo; i++) {
+                if (lista[i].getDescricao().equals(nome)) {
+                    for (int j = i; j < ultimo - 1; j++) {
+                        lista[j] = lista[j + 1];
+                    }
+                    ultimo--;
+                    tamanho--;
+                }
             }
         }
     }

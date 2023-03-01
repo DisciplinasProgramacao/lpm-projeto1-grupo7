@@ -9,34 +9,39 @@ public class Produto {
     private int quantidadeVendida;
     private int quantidadeComprada;
     private double valorArrecadado;
+    private double valorGasto;
 
     public Produto() {
         quantidadeVendida = 0;
         valorArrecadado = 0;
+        valorGasto = 0;
     }
 
     public Produto(String descricao, double precoCusto, double margemDeLucro) throws Exception {
-        setDescricao(descricao);
-        setPrecoDeCusto(precoCusto);
+        this.descricao = (descricao);
+        this.precoDeCusto = precoCusto;
         registraMargemDeLucro(margemDeLucro);
-        setPrecoDeVenda(precoCusto, margemDeLucro);
+        PrecoDeVenda(precoCusto, margemDeLucro);
     }
 
     // Getters and Setters ======================
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setPrecoDeCusto(double precoCusto) {
-        this.precoDeCusto = precoCusto;
-    }
-
-    /** Setter que seta o valor de precoDeVenda com o retorno do método calculaPrecoDeVenda
-     *  @return void
-     *  @param precoDeCusto double - Preço de Custo de um Produto passado pelo construtor
-     *  @param margemDeLucro double - Margem de Lucro de um Produto passa pelo construtor*/
-    public void setPrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
+    // ====================== Métodos ======================
+    /**
+     * Setter que seta o valor de precoDeVenda com o retorno do método
+     * calculaPrecoDeVenda
+     * 
+     * @return void
+     * @param precoDeCusto  double - Preço de Custo de um Produto passado pelo
+     *                      construtor
+     * @param margemDeLucro double - Margem de Lucro de um Produto passa pelo
+     *                      construtor
+     */
+    public void PrecoDeVenda(double precoDeCusto, double margemDeLucro) { // Testado
         try {
             this.precoDeVenda = calculaPrecoDeVenda(precoDeCusto, margemDeLucro);
         } catch (Exception e) {
@@ -44,65 +49,75 @@ public class Produto {
         }
     }
 
-    // ====================== Métodos ======================
-
-    /** Método que retorna uma margemDeLucro passando por uma expressão lógica só é aceito valores entre 30 e 80
-     *  @return void */
+    /**
+     * Método que retorna uma margemDeLucro passando por uma expressão lógica só é
+     * aceito valores entre 30 e 80
+     * 
+     * @return void
+     */
     public void registraMargemDeLucro(double margemDeLucro) throws Exception {
-        if(margemDeLucro >= 30 && margemDeLucro <= 80) {
+        if (margemDeLucro >= 30 && margemDeLucro <= 80) {
             this.margemDeLucro = margemDeLucro;
-        };
+        }
+        ;
         throw new Exception("Margem de Lucro Inválida");
     }
 
-    /** Método que calcula o preco de venda de um produto
-     *  @return double - Preço de Venda
-     *  @param precoDeCusto double - Preço de Custo de um Produto passado pelo construtor
-     *  @param margemDeLucro double - Margem de Lucro de um Produto passa pelo construtor */
+    /**
+     * Método que calcula o preco de venda de um produto
+     * 
+     * @return double - Preço de Venda
+     * @param precoDeCusto  double - Preço de Custo de um Produto passado pelo
+     *                      construtor
+     * @param margemDeLucro double - Margem de Lucro de um Produto passa pelo
+     *                      construtor
+     */
     public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
-        return 1+(impostos) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
+        return 1 + (impostos) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
     }
 
-    /** Método que acrescenta x unidades de produtos vendido ao atributo quantidadeVendida
-     *  @return void
-     *  @param quantidade int - Unidades de produtos vendidas */
-    public void registraQuantidadeVendida(int quantidade) {
-        this.quantidadeVendida += quantidade;
+    /**
+     * Método que decrementa do estoque a quantidade de x de itens vendidos e soma a
+     * sua arrecadação ao valor de caixa
+     * 
+     * @param quantidade
+     */
+    public void venderProduto(int quantidade) {
+        if (this.estoqueAtual - quantidade > 0) {
+            if (this.estoqueAtual - quantidade > estoqueMinimo) {
+                this.estoqueAtual -= quantidade;
+                this.valorArrecadado += calculaValorArrecadado(this.precoDeVenda, quantidade);
+                this.quantidadeVendida += quantidade;
+            } else {
+                System.out.println("Estoque abaixo do mínimo");
+            }
+
+        } else
+            System.out.println("Estoque insuficiente");
+
     }
 
-
-    /** Método que calcula o valor arrecadado com x unidades de produto vendida
-     *  @return double
-     *  @param precoDeVenda double - Preço de Venda de um Produto
-     *  @param quantidadeVendida double - Unidades de produtos vendidas */
-    public double calculaValorArrecadado(double precoDeVenda, double quantidadeVendida) {
+    /**
+     * Método que calcula o valor arrecadado com x unidades de produto vendida
+     * 
+     * @return double
+     * @param precoDeVenda      double - Preço de Venda de um Produto
+     * @param quantidadeVendida int - Unidades de produtos vendidas
+     */
+    public double calculaValorArrecadado(double precoDeVenda, int quantidadeVendida) {
         return precoDeVenda * quantidadeVendida;
     }
 
-    /** Método que acrescente x quantidades compradas no atributo quantidadeComprada
-     *  @return double
-     *  @param quantidade int - Quantidade comprada de um produto */
-    public void registraQuantidadeComprada(int quantidade) {
+    /**
+     * Método que acrescenta um valor x de produtos no estoque e realização a
+     * subtração do valor gasto do caixa
+     * 
+     * @param quantidade
+     */
+    public void comprarProduto(int quantidade) {
+        this.estoqueAtual += quantidade;
+        this.valorGasto -= calculaValorArrecadado(this.precoDeCusto, quantidade);
         this.quantidadeComprada += quantidade;
     }
 
-    /** Método que subtrai a quantidade vendida do estoque atual e acrescenta o valor arrecadado
-     *  @return void
-     *  @param quantidadeVendida int - Unidades de produtos vendidas */
-    public void registraVendaProduto(int quantidadeVendida) {
-        this.estoqueAtual -= quantidadeVendida;
-        this.valorArrecadado += calculaValorArrecadado(this.precoDeVenda, quantidadeVendida);
-        registraQuantidadeVendida(quantidadeVendida);
-    }
-
-    /** Método que soma a quantidade vendida do estoque atual e subtrai o valor arrecadado
-     *  @return void
-     *  @param quantidadeComprada int - Unidades de produtos compradas
-     *  @param precoCusto double - Preço de custo de um produto */
-    public void registraCompraProduto(int quantidadeComprada, double precoCusto) {
-        this.estoqueAtual += quantidadeComprada;
-        this.valorArrecadado -= calculaValorArrecadado(this.precoDeVenda, quantidadeComprada);
-        this.precoDeCusto = precoCusto;
-        registraQuantidadeComprada(quantidadeComprada);
-    }
 }
