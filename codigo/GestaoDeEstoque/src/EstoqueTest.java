@@ -30,7 +30,7 @@ import org.junit.Test;
 
 public class EstoqueTest {
     Estoque estoque = new Estoque(5);
-    
+
     @Test
     public void testAdicionarProdutosLista() throws Exception {
         Produto produto = new Produto("Arroz", 10, 60);
@@ -74,5 +74,27 @@ public class EstoqueTest {
         estoque.Guardar(produto);
         estoque.Remover("Feijão");
         assertEquals(1, estoque.ultimo);
+    }
+
+    @Test
+    public void testProcurarProdutos() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        assertEquals(produto, estoque.procurar(produto.getDescricao()));
+    }
+
+    @Test
+    public void testProcurarProdutosNaoExiste() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        assertEquals(null, estoque.procurar("Feijão"));
+    }
+    @Test
+    public void testProcurarProdutosListaVazia() throws Exception {
+        assertEquals(null, estoque.procurar("Feijão"));
+    }
+    @Test
+    public void testProdutosEstoqueAbaixoMinimo() throws Exception {
+        
     }
 }

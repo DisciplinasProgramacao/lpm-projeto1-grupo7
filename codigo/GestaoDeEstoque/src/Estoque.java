@@ -87,4 +87,18 @@ public class Estoque {
         return null;
     }
 
+    /**
+     * Metodo faz a pesquisa dentro do estoque, encrementando toda vez que um produto estiver a baixo da quantidade minima
+     * @return
+     */
+    public int ProdutosAbaixoEstoqueMinimo(){
+        int contador = 0;
+        for (int i = primeiro; i < ultimo; i++) {
+            if (lista[i].getEstoqueAtual() < lista[i].getEstoqueMinimo()) {
+                contador++;
+            }
+        }
+        return contador;
+    }
+
 }
