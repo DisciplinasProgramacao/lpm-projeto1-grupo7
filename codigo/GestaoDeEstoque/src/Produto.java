@@ -17,10 +17,10 @@ public class Produto {
         valorGasto = 0;
     }
 
-    public Produto(String descricao, double precoCusto, double margemDeLucro) throws Exception {
-        this.descricao = (descricao);
+    public Produto(String descricao, double precoCusto, int margemDeLucro) throws Exception {
+        this.descricao = descricao;
         this.precoDeCusto = precoCusto;
-        registraMargemDeLucro(margemDeLucro);
+        this.margemDeLucro = margemDeLucro;
         PrecoDeVenda(precoCusto, margemDeLucro);
     }
 
@@ -28,6 +28,9 @@ public class Produto {
 
     public String getDescricao() {
         return descricao;
+    }
+    public double getPreçoDeVemda() {
+        return precoDeVenda;
     }
 
     // ====================== Métodos ======================
@@ -55,7 +58,7 @@ public class Produto {
      * 
      * @return void
      */
-    public void registraMargemDeLucro(double margemDeLucro) throws Exception {
+    public void registraMargemDeLucro(int margemDeLucro) throws Exception {
         if (margemDeLucro >= 30 && margemDeLucro <= 80) {
             this.margemDeLucro = margemDeLucro;
         }
@@ -120,4 +123,11 @@ public class Produto {
         this.quantidadeComprada += quantidade;
     }
 
+    // #region Mostrar Dados
+
+    public void print() {
+        System.out.println("Nome: " + this.descricao + String.format("\n custo: R$%.2f", this.precoDeCusto)
+                + String.format("\n Valor de Venda: R$%.2f", this.precoDeVenda));
+    }
+    // #endregion
 }

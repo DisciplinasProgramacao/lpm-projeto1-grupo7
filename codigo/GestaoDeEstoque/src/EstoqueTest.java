@@ -28,18 +28,51 @@ import org.junit.Test;
  * SOFTWARE.
  */
 
-public class ProdutoTest {
+public class EstoqueTest {
     Estoque estoque = new Estoque(5);
+    
+    @Test
+    public void testAdicionarProdutosLista() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        assertEquals(1, estoque.ultimo);
+    }
 
     @Test
-    public void testRegistraMargemDeLucroInvalida() throws Exception {
-        Produto produto = new Produto();
+    public void testAdicionarProdutosListaCheia() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        estoque.Guardar(produto);
+        estoque.Guardar(produto);
+        estoque.Guardar(produto);
         estoque.Guardar(produto);
         try {
-            produto.registraMargemDeLucro(20);
+            estoque.Guardar(produto);
         } catch (Exception e) {
-            assertEquals("Margem de Lucro Inválida", e.getMessage());
+            assertEquals("Lista Cheia", e.getMessage());
         }
     }
 
+    @Test
+    public void testRemoverProdutosLista() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        estoque.Remover(produto.getDescricao());
+        assertEquals(0, estoque.ultimo);
+    }
+
+    @Test
+    public void testRemoverProdutosListaVazia() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Remover(produto.getDescricao());
+        assertEquals(0, estoque.ultimo);
+    }
+
+    @Test
+    public void testRemoverProdutosListaNaoExiste() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60);
+        estoque.Guardar(produto);
+        estoque.Remover("Feijão");
+        assertEquals(1, estoque.ultimo);
+    }
 }
