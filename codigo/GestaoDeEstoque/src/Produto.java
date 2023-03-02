@@ -32,6 +32,12 @@ public class Produto {
     public double getPreçoDeVemda() {
         return precoDeVenda;
     }
+    public int getEstoqueMinimo(){
+        return estoqueMinimo;
+    }
+    public int getEstoqueAtual(){
+        return estoqueAtual;
+    }
 
     // ====================== Métodos ======================
     /**
