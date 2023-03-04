@@ -29,13 +29,16 @@ public class Produto {
     public String getDescricao() {
         return descricao;
     }
+
     public double getPreçoDeVemda() {
         return precoDeVenda;
     }
-    public int getEstoqueMinimo(){
+
+    public int getEstoqueMinimo() {
         return estoqueMinimo;
     }
-    public int getEstoqueAtual(){
+
+    public int getEstoqueAtual() {
         return estoqueAtual;
     }
 
@@ -131,9 +134,9 @@ public class Produto {
 
     // #region Mostrar Dados
 
-    public void print() {
-        System.out.println("Nome: " + this.descricao + String.format("\n custo: R$%.2f", this.precoDeCusto)
-                + String.format("\n Valor de Venda: R$%.2f", this.precoDeVenda));
+    public String print() {
+        return "Nome: " + this.descricao + String.format("\n custo: R$%.2f", this.precoDeCusto)
+                + String.format("\n Valor de Venda: R$%.2f", this.precoDeVenda);
     }
     // #endregion
 }
