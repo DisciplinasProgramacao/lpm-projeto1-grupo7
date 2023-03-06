@@ -2,8 +2,8 @@
 public class Main {
     public static void main(String[] args) throws Exception {
         Produto produto = new Produto("Descricao", 10, 10 );
-        Produto feijao = new Produto();
-        Produto arroz = new Produto();
+        Produto feijao = new Produto("feijao", 6, 50);
+        Produto arroz = new Produto("arroz", 12, 40);
 
         Estoque estoque = new Estoque(100);
 

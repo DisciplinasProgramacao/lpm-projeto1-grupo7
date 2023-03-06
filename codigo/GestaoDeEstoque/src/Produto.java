@@ -90,9 +90,10 @@ public class Produto {
     public void registraMargemDeLucro(int margemDeLucro) throws Exception {
         if (margemDeLucro >= 30 && margemDeLucro <= 80) {
             this.margemDeLucro = margemDeLucro;
+        } else {
+            throw new Exception("Margem de Lucro Inválida");
         }
-        ;
-        throw new Exception("Margem de Lucro Inválida");
+        
     }
 
     /**
