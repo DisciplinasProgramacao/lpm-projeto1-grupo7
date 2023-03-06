@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -29,17 +28,64 @@ import org.junit.Test;
  */
 
 public class ProdutoTest {
-    Estoque estoque = new Estoque(5);
 
     @Test
-    public void testRegistraMargemDeLucroInvalida() throws Exception {
+    public void deveRegistraMargemDeLucroInvalida() throws Exception {
         Produto produto = new Produto();
-        estoque.Guardar(produto);
         try {
             produto.registraMargemDeLucro(20);
         } catch (Exception e) {
             assertEquals("Margem de Lucro Inválida", e.getMessage());
         }
+    }
+
+    @Test
+    public void deveRegistraMargemDeLucroValida() throws Exception {
+        Produto produto = new Produto("", 0, 50);
+        assertEquals(50, produto.getMargemDeLucro(), 0.1);
+    }
+
+    @Test
+    public void deveRegistrarPrecoDeVenda() throws Exception {
+        Produto produto = new Produto("", 20, 50);
+        assertEquals(35.4, produto.getPreçoDeVenda(), 0.01);
+    }
+
+    @Test
+    public void deveComprarProduto() throws Exception {
+        Produto produto = new Produto();
+        produto.comprarProduto(7);
+        assertEquals(7, produto.getQuantidadeComprada());
+    }
+
+    @Test
+    public void calculaValorGasto() throws Exception {
+        Produto produto = new Produto("", 20, 50);
+        produto.comprarProduto(7);
+        assertEquals(140, produto.getValorGasto(), 0.1);
+    }
+
+    @Test
+    public void deveVenderProduto() throws Exception {
+        Produto produto = new Produto();
+        produto.comprarProduto(10);
+        produto.venderProduto(9);
+        assertEquals(9, produto.getQuantidadeVendida());
+    }
+
+    @Test
+    public void calculaValorArrecadado() throws Exception {
+        Produto produto = new Produto("", 20, 50);
+        produto.comprarProduto(10);
+        produto.venderProduto(9);
+        assertEquals(318.6, produto.getValorArrecadado(), 0.1);
+    }
+
+    @Test
+    public void deveMostrarDadosDoProduto() throws Exception {
+        Produto produto = new Produto("Alprazolam 1mg", 10, 40);
+        assertEquals("Descrição do produto: Alprazolam 1mg\nPreço de Custo: R$10,00\nValor de Venda: R$16,52",
+                produto.print());
     }
 
 }

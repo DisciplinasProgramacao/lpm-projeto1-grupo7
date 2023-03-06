@@ -1,5 +1,4 @@
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
@@ -89,12 +88,14 @@ public class EstoqueTest {
         estoque.Guardar(produto);
         assertEquals(null, estoque.procurar("Feijão"));
     }
+
     @Test
     public void testProcurarProdutosListaVazia() throws Exception {
         assertEquals(null, estoque.procurar("Feijão"));
     }
+
     @Test
     public void testProdutosEstoqueAbaixoMinimo() throws Exception {
-        
+
     }
 }

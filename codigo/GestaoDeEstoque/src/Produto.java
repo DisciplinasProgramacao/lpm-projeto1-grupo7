@@ -30,8 +30,12 @@ public class Produto {
         return descricao;
     }
 
-    public double getPreçoDeVemda() {
+    public double getPreçoDeVenda() {
         return precoDeVenda;
+    }
+
+    public double getMargemDeLucro() {
+        return margemDeLucro;
     }
 
     public int getEstoqueMinimo() {
@@ -40,6 +44,22 @@ public class Produto {
 
     public int getEstoqueAtual() {
         return estoqueAtual;
+    }
+
+    public int getQuantidadeComprada() {
+        return quantidadeComprada;
+    }
+
+    public int getQuantidadeVendida() {
+        return quantidadeVendida;
+    }
+
+    public double getValorArrecadado() {
+        return valorArrecadado;
+    }
+
+    public double getValorGasto() {
+        return valorGasto;
     }
 
     // ====================== Métodos ======================
@@ -85,7 +105,7 @@ public class Produto {
      *                      construtor
      */
     public double calculaPrecoDeVenda(double precoDeCusto, double margemDeLucro) {
-        return 1 + (impostos) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
+        return (1 + (impostos)) * ((precoDeCusto * margemDeLucro / 100) + precoDeCusto);
     }
 
     /**
@@ -110,13 +130,14 @@ public class Produto {
     }
 
     /**
-     * Método que calcula o valor arrecadado com x unidades de produto vendida
+     * Método que calcula o valor arrecadado com x unidades de produto vendidas ou
+     * compradas
      * 
      * @return double
      * @param precoDeVenda      double - Preço de Venda de um Produto
      * @param quantidadeVendida int - Unidades de produtos vendidas
      */
-    public double calculaValorArrecadado(double precoDeVenda, int quantidadeVendida) {
+    private double calculaValorArrecadado(double precoDeVenda, int quantidadeVendida) {
         return precoDeVenda * quantidadeVendida;
     }
 
@@ -128,15 +149,15 @@ public class Produto {
      */
     public void comprarProduto(int quantidade) {
         this.estoqueAtual += quantidade;
-        this.valorGasto -= calculaValorArrecadado(this.precoDeCusto, quantidade);
+        this.valorGasto += calculaValorArrecadado(this.precoDeCusto, quantidade);
         this.quantidadeComprada += quantidade;
     }
 
     // #region Mostrar Dados
 
     public String print() {
-        return "Nome: " + this.descricao + String.format("\n custo: R$%.2f", this.precoDeCusto)
-                + String.format("\n Valor de Venda: R$%.2f", this.precoDeVenda);
+        return "Descrição do produto: " + this.descricao + String.format("\nPreço de Custo: R$%.2f", this.precoDeCusto)
+                + String.format("\nValor de Venda: R$%.2f", this.precoDeVenda);
     }
     // #endregion
 }
