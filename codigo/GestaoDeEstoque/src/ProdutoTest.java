@@ -41,7 +41,8 @@ public class ProdutoTest {
 
     @Test
     public void deveRegistraMargemDeLucroValida() throws Exception {
-        Produto produto = new Produto("", 0, 50);
+        Produto produto = new Produto();
+        produto.registraMargemDeLucro(50);
         assertEquals(50, produto.getMargemDeLucro(), 0.1);
     }
 
