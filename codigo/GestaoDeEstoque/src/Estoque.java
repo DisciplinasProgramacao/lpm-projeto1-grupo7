@@ -101,4 +101,27 @@ public class Estoque {
         return contador;
     }
 
+    /**
+     * Metodo realiza a soma do valor de custo pela quantidade de cada produto do estoque
+     * @return valor total do estoque atual
+     */
+    public double valorTotalEmEstoque(){
+        double valorTotal = 0;
+        for (int i = primeiro; i < ultimo; i++) {
+            valorTotal += lista[i].getPrecoDeCusto() * lista[i].getEstoqueAtual();
+        }
+        return valorTotal;
+    }
+
+    /**
+     * Metodo que ira retornar a soma de todos os itens presentes no estoque atual
+     * @return
+     */
+    public int quantidadeItensEstoque(){
+        int quantidadeEstoque=0;
+        for (int i = primeiro; i < ultimo; i++) {
+            quantidadeEstoque += lista[i].getEstoqueAtual();
+        }
+        return quantidadeEstoque;
+    }
 }
