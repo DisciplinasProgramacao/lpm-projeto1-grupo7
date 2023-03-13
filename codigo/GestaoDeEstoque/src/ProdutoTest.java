@@ -48,7 +48,7 @@ public class ProdutoTest {
 
     @Test
     public void deveRegistrarPrecoDeVenda() throws Exception {
-        Produto produto = new Produto("", 20, 50);
+        Produto produto = new Produto("", 20, 50, 5);
         assertEquals(35.4, produto.getPreçoDeVenda(), 0.01);
     }
 
@@ -61,7 +61,7 @@ public class ProdutoTest {
 
     @Test
     public void calculaValorGasto() throws Exception {
-        Produto produto = new Produto("", 20, 50);
+        Produto produto = new Produto("", 20, 50, 0);
         produto.comprarProduto(7);
         assertEquals(140, produto.getValorGasto(), 0.1);
     }
@@ -76,7 +76,7 @@ public class ProdutoTest {
 
     @Test
     public void calculaValorArrecadado() throws Exception {
-        Produto produto = new Produto("", 20, 50);
+        Produto produto = new Produto("", 20, 50, 0);
         produto.comprarProduto(10);
         produto.venderProduto(9);
         assertEquals(318.6, produto.getValorArrecadado(), 0.1);
@@ -84,7 +84,7 @@ public class ProdutoTest {
 
     @Test
     public void deveMostrarDadosDoProduto() throws Exception {
-        Produto produto = new Produto("Alprazolam 1mg", 10, 40);
+        Produto produto = new Produto("Alprazolam 1mg", 10, 40, 10);
         assertEquals("Descrição do produto: Alprazolam 1mg\nPreço de Custo: R$10,00\nValor de Venda: R$16,52",
                 produto.print());
     }
