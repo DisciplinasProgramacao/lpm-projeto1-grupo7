@@ -32,14 +32,14 @@ public class EstoqueTest {
 
     @Test
     public void testAdicionarProdutosLista() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 2);
         estoque.Guardar(produto);
         assertEquals(1, estoque.ultimo);
     }
 
     @Test
     public void testAdicionarProdutosListaCheia() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 5);
         estoque.Guardar(produto);
         estoque.Guardar(produto);
         estoque.Guardar(produto);
@@ -54,7 +54,7 @@ public class EstoqueTest {
 
     @Test
     public void testRemoverProdutosLista() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 3);
         estoque.Guardar(produto);
         estoque.Remover(produto.getDescricao());
         assertEquals(0, estoque.ultimo);
@@ -62,14 +62,14 @@ public class EstoqueTest {
 
     @Test
     public void testRemoverProdutosListaVazia() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 3);
         estoque.Remover(produto.getDescricao());
         assertEquals(0, estoque.ultimo);
     }
 
     @Test
     public void testRemoverProdutosListaNaoExiste() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 3);
         estoque.Guardar(produto);
         estoque.Remover("Feijão");
         assertEquals(1, estoque.ultimo);
@@ -77,14 +77,22 @@ public class EstoqueTest {
 
     @Test
     public void testProcurarProdutos() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 5);
+        Produto produto2 = new Produto("Feijão", 10, 60, 5);
+        Produto produto3 = new Produto("Macarrão", 10, 60, 5);
+        Produto produto4 = new Produto("Farinha", 10, 60, 5);
+        Produto produto5 = new Produto("Açucar", 10, 60, 5);
         estoque.Guardar(produto);
+        estoque.Guardar(produto2);
+        estoque.Guardar(produto3);
+        estoque.Guardar(produto4);
+        estoque.Guardar(produto5);
         assertEquals(produto, estoque.procurar(produto.getDescricao()));
     }
 
     @Test
     public void testProcurarProdutosNaoExiste() throws Exception {
-        Produto produto = new Produto("Arroz", 10, 60);
+        Produto produto = new Produto("Arroz", 10, 60, 6);
         estoque.Guardar(produto);
         assertEquals(null, estoque.procurar("Feijão"));
     }
@@ -95,7 +103,41 @@ public class EstoqueTest {
     }
 
     @Test
-    public void testProdutosEstoqueAbaixoMinimo() throws Exception {
+    public void testVenderProdutos() throws Exception {
+        Produto produto = new Produto("Arroz", 10, 60, 5);
+        estoque.Guardar(produto);
+        produto.venderProduto(2);
+        assertEquals(3, produto.getEstoqueAtual());
+    }
 
+    @Test
+    public void testComprarProdutos() throws Exception{
+        Produto produto = new Produto("Arroz", 10, 60, 5);
+        estoque.Guardar(produto);
+        produto.comprarProduto(2);
+        assertEquals(7, produto.getEstoqueAtual());
+    }
+    @Test
+    public void testProdutosEstoqueAbaixoMinimo() throws Exception {
+        Produto produto1 = new Produto("Arroz", 10, 60, 7);
+        estoque.Guardar(produto1);
+        Produto produto2 = new Produto("Feijão", 10, 60, 8);
+        estoque.Guardar(produto2);
+        Produto produto3 = new Produto("Macarrão", 10, 60, 9);
+        estoque.Guardar(produto3);
+        Produto produto4 = new Produto("Farinha", 10, 60, 10);
+        estoque.Guardar(produto4);
+        produto1.venderProduto(2);
+        assertEquals(produto1, estoque.ProdutosAbaixoEstoqueMinimo());
+
+    }
+
+    @Test
+    public void testValorTotalEstoque() throws Exception {
+        Produto produto1 = new Produto("Arroz", 10, 60, 7);
+        estoque.Guardar(produto1);
+        Produto produto2 = new Produto("Feijao", 10, 60, 8);
+        estoque.Guardar(produto2);
+        assertEquals(150, estoque.valorTotalEmEstoque(), 0);
     }
 }

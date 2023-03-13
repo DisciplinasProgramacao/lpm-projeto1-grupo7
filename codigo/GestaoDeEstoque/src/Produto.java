@@ -11,16 +11,20 @@ public class Produto {
     private double valorArrecadado;
     private double valorGasto;
 
+    // **Verificar a necessidade de um construtor sem parametros, pra evitar quebras
+    // de sistema por criar um objeto null. Priorizar a criação so com parametros */
     public Produto() {
         quantidadeVendida = 0;
         valorArrecadado = 0;
         valorGasto = 0;
     }
 
-    public Produto(String descricao, double precoCusto, int margemDeLucro) throws Exception {
+    public Produto(String descricao, double precoCusto, int margemDeLucro, int estoqueMinimo) throws Exception {
         this.descricao = descricao;
         this.precoDeCusto = precoCusto;
         this.margemDeLucro = margemDeLucro;
+        this.estoqueAtual = estoqueMinimo;
+        this.estoqueMinimo = estoqueMinimo;
         PrecoDeVenda(precoCusto, margemDeLucro);
     }
 
@@ -62,6 +66,10 @@ public class Produto {
         return valorGasto;
     }
 
+    public double getPrecoDeCusto() {
+        return precoDeCusto;
+    }
+
     // ====================== Métodos ======================
     /**
      * Setter que seta o valor de precoDeVenda com o retorno do método
@@ -93,7 +101,7 @@ public class Produto {
         } else {
             throw new Exception("Margem de Lucro Inválida");
         }
-        
+
     }
 
     /**
@@ -117,14 +125,13 @@ public class Produto {
      */
     public void venderProduto(int quantidade) {
         if (this.estoqueAtual - quantidade > 0) {
-            if (this.estoqueAtual - quantidade > estoqueMinimo) {
-                this.estoqueAtual -= quantidade;
-                this.valorArrecadado += calculaValorArrecadado(this.precoDeVenda, quantidade);
-                this.quantidadeVendida += quantidade;
-            } else {
-                System.out.println("Estoque abaixo do mínimo");
-            }
+            this.estoqueAtual -= quantidade;
+            this.valorArrecadado += calculaValorArrecadado(this.precoDeVenda, quantidade);
+            this.quantidadeVendida += quantidade;
 
+        }else if(this.estoqueAtual - quantidade == this.estoqueMinimo)
+        {
+            System.out.println("Quantidade Minima atingida, realizar pedido");
         } else
             System.out.println("Estoque insuficiente");
 

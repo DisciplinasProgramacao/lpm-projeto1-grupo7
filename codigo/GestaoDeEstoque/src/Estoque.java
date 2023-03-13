@@ -44,7 +44,6 @@ public class Estoque {
                 lista[ultimo] = novo;
                 ultimo++;
                 tamanho++;
-                System.out.println("Produto adicionado com sucesso");
             }
         }
     }
@@ -88,17 +87,16 @@ public class Estoque {
     }
 
     /**
-     * Metodo faz a pesquisa dentro do estoque, encrementando toda vez que um produto estiver a baixo da quantidade minima
+     * Metodo faz a pesquisa dentro do estoque, retornando o objeto toda vez que um produto estiver a baixo da quantidade minima
      * @return
      */
-    public int ProdutosAbaixoEstoqueMinimo(){
-        int contador = 0;
+    public Produto ProdutosAbaixoEstoqueMinimo(){
         for (int i = primeiro; i < ultimo; i++) {
             if (lista[i].getEstoqueAtual() < lista[i].getEstoqueMinimo()) {
-                contador++;
+                return lista[i];
             }
         }
-        return contador;
+        return null;
     }
 
     /**
