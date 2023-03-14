@@ -122,7 +122,7 @@ public class Main {
         Produto produto = estoque.procurar(nomeProduto);
         
         if (produto != null) {
-            produto.print();
+            System.out.println(produto.print()); 
         }else {
             System.out.println("Produto não encontrado");
         }
