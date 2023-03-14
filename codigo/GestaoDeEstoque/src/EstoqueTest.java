@@ -128,7 +128,12 @@ public class EstoqueTest {
         Produto produto4 = new Produto("Farinha", 10, 60, 10);
         estoque.Guardar(produto4);
         produto1.venderProduto(2);
-        assertEquals(produto1, estoque.ProdutosAbaixoEstoqueMinimo());
+        produto2.venderProduto(2);
+        produto3.venderProduto(2);
+        Produto produtosArray[]= estoque.ProdutosAbaixoEstoqueMinimo();
+        assertEquals(produto1,produtosArray[0]);
+        assertEquals(produto2,produtosArray[1]);
+        assertEquals(produto3,produtosArray[2]);
 
     }
 

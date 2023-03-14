@@ -90,13 +90,16 @@ public class Estoque {
      * Metodo faz a pesquisa dentro do estoque, retornando o objeto toda vez que um produto estiver a baixo da quantidade minima
      * @return
      */
-    public Produto ProdutosAbaixoEstoqueMinimo(){
+    public Produto [] ProdutosAbaixoEstoqueMinimo(){
+        Produto abaixoEstoque[] = new Produto[ultimo];
+        int j=0;
         for (int i = primeiro; i < ultimo; i++) {
             if (lista[i].getEstoqueAtual() < lista[i].getEstoqueMinimo()) {
-                return lista[i];
+                abaixoEstoque[j] = lista[i];
+                j++;
             }
         }
-        return null;
+        return abaixoEstoque;
     }
 
     /**
