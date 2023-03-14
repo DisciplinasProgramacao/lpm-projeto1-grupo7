@@ -1,4 +1,3 @@
-import java.net.SocketImpl;
 import java.util.Scanner;
 
 public class Main {
@@ -105,8 +104,11 @@ public class Main {
 
     public static void imprimeProdutosAbaixoEstoque(Estoque estoque) {
         if(estoque.ProdutosAbaixoEstoqueMinimo() != null){
-        Produto produto = estoque.ProdutosAbaixoEstoqueMinimo();
-        System.out.println("Produto abaixo do estoque mínimo: " + produto.getDescricao());
+        Produto[] produto = estoque.ProdutosAbaixoEstoqueMinimo();
+        for(int i = 0; i < produto.length; i++){
+           System.out.println("Produto abaixo do estoque mínimo: " + produto[i].getDescricao()); 
+        }
+        
         } else {
             System.out.println("Nenhum produto abaixo do estoque minimo!");
         }
