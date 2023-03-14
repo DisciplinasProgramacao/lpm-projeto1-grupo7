@@ -1,17 +1,14 @@
+import java.net.SocketImpl;
 import java.util.Scanner;
 
 public class Main {
 
-    public static Estoque criarEstoque() {
-        Scanner scan = new Scanner(System.in);
-
+    public static Estoque criarEstoque(Scanner scanner) {
         System.out.print("Digite a quantidade de armazenamento do estoque:");
-        int quantidadeEstoque = scan.nextInt();
+        int quantidadeEstoque = scanner.nextInt();
         System.out.println("");
 
         Estoque estoque = new Estoque(quantidadeEstoque);
-
-        scan.close();
 
         return estoque;
 
@@ -32,33 +29,31 @@ public class Main {
         System.out.println("Digite qual deseja executar:");
     }
 
-    public static void criarProduto(Estoque estoque) throws Exception {
-        Scanner scan = new Scanner(System.in);
-
+    public static void criarProduto(Estoque estoque, Scanner scanner) throws Exception { 
         System.out.print("Digite o nome do produto:");
-        String produtoNome = scan.nextLine();
+        scanner.nextLine();
+        String produtoNome = scanner.nextLine();
         System.out.print("\nDigite o preço de custo do produto:");
-        double precoCusto = scan.nextDouble();
+        double precoCusto = scanner.nextDouble();
         System.out.print("\nDigite a margem de lucro do produto:");
-        int margemDeLucro = scan.nextInt();
+        int margemDeLucro = scanner.nextInt();
         System.out.print("\nDigite o minimo de produtos que pode ter em estoque:");
-        int estoqueMinimo = scan.nextInt();
+        int estoqueMinimo = scanner.nextInt();
 
         Produto produto = new Produto(produtoNome, precoCusto, margemDeLucro, estoqueMinimo);
 
         estoque.Guardar(produto);
         System.out.println("Produto criado com sucesso!!!");
-        scan.close();
 
     }
 
-    public static void efetuarCompra(Estoque estoque) {
-        Scanner scan = new Scanner(System.in);
+    public static void efetuarCompra(Estoque estoque, Scanner scanner) {
 
         System.out.print("Digite o nome do produto a ser comprado:");
-        String nomeProduto = scan.nextLine();
+        scanner.nextLine();
+        String nomeProduto = scanner.nextLine();
         System.out.print("\nDigite a quantidade de produtos a serem comprados:");
-        int quantidadeProdutosCompra = scan.nextInt();
+        int quantidadeProdutosCompra = scanner.nextInt();
 
         Produto produto = estoque.procurar(nomeProduto);
 
@@ -69,17 +64,15 @@ public class Main {
             System.out.println("Produto não encontrado");
         }
 
-        scan.close();
-
     }
 
-    public static void efetuarVenda(Estoque estoque) {
-        Scanner scan = new Scanner(System.in);
+    public static void efetuarVenda(Estoque estoque, Scanner scanner) {
 
         System.out.print("Digite o nome do produto a ser vendido:");
-        String nomeProduto = scan.nextLine();
+        scanner.nextLine();
+        String nomeProduto = scanner.nextLine();
         System.out.print("\nDigite a quantidade de produtos a serem vendidos:");
-        int quantidadeProdutosVenda = scan.nextInt();
+        int quantidadeProdutosVenda = scanner.nextInt();
 
         Produto produto = estoque.procurar(nomeProduto);
 
@@ -95,7 +88,6 @@ public class Main {
             System.out.println("Produto não encontrado");
         }
 
-        scan.close();
 
     }
 
@@ -112,40 +104,42 @@ public class Main {
     }
 
     public static void imprimeProdutosAbaixoEstoque(Estoque estoque) {
+        if(estoque.ProdutosAbaixoEstoqueMinimo() != null){
         Produto produto = estoque.ProdutosAbaixoEstoqueMinimo();
-
         System.out.println("Produto abaixo do estoque mínimo: " + produto.getDescricao());
+        } else {
+            System.out.println("Nenhum produto abaixo do estoque minimo!");
+        }
+        
         
     }
 
-    public static void imprimeProdutosDescricao(Estoque estoque) {
-        Scanner scan = new Scanner(System.in);
-
+    public static void imprimeProdutosDescricao(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o nome do produto:");
-        String nomeProduto = scan.nextLine();
-            
+        scanner.nextLine();
+        String nomeProduto = scanner.nextLine();
+   
         Produto produto = estoque.procurar(nomeProduto);
-
+        
         if (produto != null) {
             produto.print();
-        } else {
+        }else {
             System.out.println("Produto não encontrado");
         }
-        scan.close();
-        
     }
 
-    public static void executarMenu(int num, Estoque estoque) throws Exception {
-
+    public static void executarMenu(int num, Estoque estoque, Scanner scanner) throws Exception {
+        while(num != 8){
+            
         switch (num) {
             case 1:
-                criarProduto(estoque);
+                criarProduto(estoque, scanner);
                 break;
             case 2:
-                efetuarCompra(estoque);
+                efetuarCompra(estoque, scanner);
                 break;
             case 3:
-                efetuarVenda(estoque);
+                efetuarVenda(estoque, scanner);
                 break;
             case 4:
                 imprimeQuantideItensEstoque(estoque);
@@ -157,11 +151,17 @@ public class Main {
                 imprimeProdutosAbaixoEstoque(estoque);
                 break;
             case 7:
-                imprimeProdutosDescricao(estoque);
+                imprimeProdutosDescricao(estoque, scanner);
                 break;
+            case 8:
+
+            break;
             default:
-                System.out.println("Saindo...");
+                System.out.println("Entrada Inválida");
                 break;
+        }
+        exibirMenu();
+        num = scanner.nextInt();
         }
 
     }
@@ -169,13 +169,13 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
-        Estoque estoque = criarEstoque();
+        Estoque estoque = criarEstoque(scanner);
 
         exibirMenu();
 
         int numero = scanner.nextInt();
         
-        executarMenu(numero, estoque);
+        executarMenu(numero, estoque, scanner);
 
         scanner.close();
     }
