@@ -19,10 +19,10 @@ public class Produto {
         valorGasto = 0;
     }
 
-    public Produto(String descricao, double precoCusto, int margemDeLucro, int estoqueMinimo) {
+    public Produto(String descricao, double precoCusto, int margemDeLucro, int estoqueMinimo) throws Exception {
         this.descricao = descricao;
         this.precoDeCusto = precoCusto;
-        this.margemDeLucro = margemDeLucro;
+        registraMargemDeLucro(margemDeLucro);
         this.estoqueAtual = estoqueMinimo;
         this.estoqueMinimo = estoqueMinimo;
         PrecoDeVenda(precoCusto, margemDeLucro);

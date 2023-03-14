@@ -39,10 +39,17 @@ public class Main {
         System.out.print("\nDigite o minimo de produtos que pode ter em estoque:");
         int estoqueMinimo = scanner.nextInt();
 
+        try{
         Produto produto = new Produto(produtoNome, precoCusto, margemDeLucro, estoqueMinimo);
-
+        
         estoque.Guardar(produto);
         System.out.println("Produto criado com sucesso!!!");
+        } catch(Exception e) {
+            System.out.println(e);
+
+            System.out.println("Produto não criado !!! Insira uma margem de lucro válida");
+        }
+        
 
     }
 
