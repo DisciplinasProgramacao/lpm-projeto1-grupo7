@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Digite qual deseja executar:");
     }
 
-    public static void criarProduto(Estoque estoque, Scanner scanner) throws Exception { 
+    public static void criarProduto(Estoque estoque, Scanner scanner) throws Exception {
         System.out.print("Digite o nome do produto:");
         scanner.nextLine();
         String produtoNome = scanner.nextLine();
@@ -39,17 +39,16 @@ public class Main {
         System.out.print("\nDigite o minimo de produtos que pode ter em estoque:");
         int estoqueMinimo = scanner.nextInt();
 
-        try{
-        Produto produto = new Produto(produtoNome, precoCusto, margemDeLucro, estoqueMinimo);
-        
-        estoque.Guardar(produto);
-        System.out.println("Produto criado com sucesso!!!");
-        } catch(Exception e) {
+        try {
+            Produto produto = new Produto(produtoNome, precoCusto, margemDeLucro, estoqueMinimo);
+
+            estoque.Guardar(produto);
+            System.out.println("Produto criado com sucesso!!!");
+        } catch (Exception e) {
             System.out.println(e);
 
             System.out.println("Produto não criado !!! Insira uma margem de lucro válida");
         }
-        
 
     }
 
@@ -94,83 +93,85 @@ public class Main {
             System.out.println("Produto não encontrado");
         }
 
-
     }
 
     public static void imprimeQuantideItensEstoque(Estoque estoque) {
 
         System.out.println("Quantidade de produtos no estoque é: " + estoque.quantidadeItensEstoque());
-        
+
     }
 
     public static void imprimeValorEstoque(Estoque estoque) {
-
-        System.out.println("Valor de custo total em estoque: " + estoque.valorTotalEmEstoque());
+        String saida = String.format("Valor de custo total em entoque:R$%.2f", estoque.valorTotalEmEstoque());
+        System.out.println(saida);
         
     }
 
     public static void imprimeProdutosAbaixoEstoque(Estoque estoque) {
-        if(estoque.ProdutosAbaixoEstoqueMinimo() != null){
-        Produto[] produto = estoque.ProdutosAbaixoEstoqueMinimo();
-        for(int i = 0; i < produto.length; i++){
-           System.out.println("Produto abaixo do estoque mínimo: " + produto[i].getDescricao()); 
-        }
-        
+        if (estoque.ProdutosAbaixoEstoqueMinimo() != null) {
+            Produto[] produto = estoque.ProdutosAbaixoEstoqueMinimo();
+            for (int i = 0; i < produto.length; i++) {
+                if (produto[i] != null) {
+                    System.out.println("Produto abaixo do estoque mínimo: " + produto[i].getDescricao());
+                } else {
+                    System.out.println("Nenhum produto abaixo do estoque minimo!");
+                }
+            }
+
         } else {
             System.out.println("Nenhum produto abaixo do estoque minimo!");
         }
-        
-        
+
     }
 
     public static void imprimeProdutosDescricao(Estoque estoque, Scanner scanner) {
         System.out.print("Digite o nome do produto:");
         scanner.nextLine();
         String nomeProduto = scanner.nextLine();
-   
+
         Produto produto = estoque.procurar(nomeProduto);
-        
+
         if (produto != null) {
-            System.out.println(produto.print()); 
-        }else {
+            System.out.println(produto.print());
+        } else {
             System.out.println("Produto não encontrado");
         }
     }
 
     public static void executarMenu(int num, Estoque estoque, Scanner scanner) throws Exception {
-        while(num != 8){
-            
-        switch (num) {
-            case 1:
-                criarProduto(estoque, scanner);
-                break;
-            case 2:
-                efetuarCompra(estoque, scanner);
-                break;
-            case 3:
-                efetuarVenda(estoque, scanner);
-                break;
-            case 4:
-                imprimeQuantideItensEstoque(estoque);
-                break;
-            case 5:
-                imprimeValorEstoque(estoque);
-                break;
-            case 6:
-                imprimeProdutosAbaixoEstoque(estoque);
-                break;
-            case 7:
-                imprimeProdutosDescricao(estoque, scanner);
-                break;
-            case 8:
+        while (num != 8) {
 
-            break;
-            default:
-                System.out.println("Entrada Inválida");
-                break;
-        }
-        exibirMenu();
-        num = scanner.nextInt();
+            switch (num) {
+                case 1:
+                    criarProduto(estoque, scanner);
+                    break;
+                case 2:
+                    efetuarCompra(estoque, scanner);
+                    break;
+                case 3:
+                    efetuarVenda(estoque, scanner);
+                    break;
+                case 4:
+                    imprimeQuantideItensEstoque(estoque);
+                    break;
+                case 5:
+                    imprimeValorEstoque(estoque);
+                    break;
+                case 6:
+                    imprimeProdutosAbaixoEstoque(estoque);
+                    break;
+                case 7:
+                    imprimeProdutosDescricao(estoque, scanner);
+                    break;
+                case 8:
+
+                    break;
+                default:
+                    System.out.println("Entrada Inválida");
+                    break;
+            }
+            exibirMenu();
+            num = scanner.nextInt();
         }
 
     }
@@ -183,7 +184,7 @@ public class Main {
         exibirMenu();
 
         int numero = scanner.nextInt();
-        
+
         executarMenu(numero, estoque, scanner);
 
         scanner.close();
