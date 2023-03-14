@@ -19,7 +19,7 @@ public class Produto {
         valorGasto = 0;
     }
 
-    public Produto(String descricao, double precoCusto, int margemDeLucro, int estoqueMinimo) throws Exception {
+    public Produto(String descricao, double precoCusto, int margemDeLucro, int estoqueMinimo) {
         this.descricao = descricao;
         this.precoDeCusto = precoCusto;
         this.margemDeLucro = margemDeLucro;
@@ -123,17 +123,14 @@ public class Produto {
      * 
      * @param quantidade
      */
-    public void venderProduto(int quantidade) {
+    public void venderProduto(int quantidade) throws Exception {
         if (this.estoqueAtual - quantidade > 0) {
             this.estoqueAtual -= quantidade;
             this.valorArrecadado += calculaValorArrecadado(this.precoDeVenda, quantidade);
             this.quantidadeVendida += quantidade;
 
-        }else if(this.estoqueAtual - quantidade == this.estoqueMinimo)
-        {
-            System.out.println("Quantidade Minima atingida, realizar pedido");
-        } else
-            System.out.println("Estoque insuficiente");
+        }else
+            throw new Exception("Estoque insuficiente");
 
     }
 
