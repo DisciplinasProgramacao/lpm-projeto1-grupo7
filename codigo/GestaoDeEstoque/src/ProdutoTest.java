@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
@@ -72,6 +73,28 @@ public class ProdutoTest {
         produto.comprarProduto(10);
         produto.venderProduto(9);
         assertEquals(9, produto.getQuantidadeVendida());
+    }
+
+
+
+    //ADICIONADO POR JOAO
+    @Test
+    public void naoDeveVenderMaisDoQueTem() throws Exception {
+        Produto produto = new Produto();
+        produto.comprarProduto(10);
+        assertThrows(Exception.class, ()->    produto.venderProduto(129));
+        
+    }
+
+
+    /////////ADICIONADO POR JOÃO
+    @Test
+    public void naoPodeVenderQuantidadeNegativa() throws Exception{
+        Produto produto = new Produto();
+        produto.comprarProduto(10);
+        produto.venderProduto(-9);
+        assertEquals(10,produto.getEstoqueAtual());
+
     }
 
     @Test

@@ -87,12 +87,14 @@ public class Estoque {
     }
 
     /**
-     * Metodo faz a pesquisa dentro do estoque, retornando o objeto toda vez que um produto estiver a baixo da quantidade minima
+     * Metodo faz a pesquisa dentro do estoque, retornando o objeto toda vez que um
+     * produto estiver a baixo da quantidade minima
+     * 
      * @return
      */
-    public Produto [] ProdutosAbaixoEstoqueMinimo(){
+    public Produto[] ProdutosAbaixoEstoqueMinimo() {
         Produto abaixoEstoque[] = new Produto[ultimo];
-        int j=0;
+        int j = 0;
         for (int i = primeiro; i < ultimo; i++) {
             if (lista[i].getEstoqueAtual() < lista[i].getEstoqueMinimo()) {
                 abaixoEstoque[j] = lista[i];
@@ -103,10 +105,12 @@ public class Estoque {
     }
 
     /**
-     * Metodo realiza a soma do valor de custo pela quantidade de cada produto do estoque
+     * Metodo realiza a soma do valor de custo pela quantidade de cada produto do
+     * estoque
+     * 
      * @return valor total do estoque atual
      */
-    public double valorTotalEmEstoque(){
+    public double valorTotalEmEstoque() {
         double valorTotal = 0;
         for (int i = primeiro; i < ultimo; i++) {
             valorTotal += lista[i].getPrecoDeCusto() * lista[i].getEstoqueAtual();
@@ -116,10 +120,11 @@ public class Estoque {
 
     /**
      * Metodo que ira retornar a soma de todos os itens presentes no estoque atual
+     * 
      * @return
      */
-    public int quantidadeItensEstoque(){
-        int quantidadeEstoque=0;
+    public int quantidadeItensEstoque() {
+        int quantidadeEstoque = 0;
         for (int i = primeiro; i < ultimo; i++) {
             quantidadeEstoque += lista[i].getEstoqueAtual();
         }
